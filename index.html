@@ -297,7 +297,6 @@
 
   <!-- 行程 -->
   <section class="panel active" id="panel-plan">
-    <div class="todo" style="margin-bottom:12px;">行程待 LIN 提供老婆實際行程後填入；影片範例內容已移除。</div>
     <div style="margin-bottom:12px;">
       <button type="button" class="btn-ghost" id="plan-export">📋 複製我新增的項目</button>
       <span class="export-status" id="plan-export-status"></span>
@@ -328,7 +327,7 @@
   </section>
 
   <footer>
-    航班、住宿、eSIM 以 LIN 提供的 PDF 為準；行程與購物待 LIN 提供實際內容後填入；<br>
+    航班、住宿、eSIM 以 LIN 提供的 PDF 為準；行程與購物可自行新增；<br>
     公開版不要放護照號碼、訂位代號等敏感資料。
   </footer>
 
@@ -354,6 +353,12 @@
     cd.innerHTML = "旅行結束，歡迎回家 💕<small>2026/11/14–11/19</small>";
   }
 
+  /* Day1~Day5 快捷列只在須知／地鐵顯示；點進行程／購物後就收起來，
+     行程分頁內原本的 D1–D5 選擇器負責換天，避免兩排同時出現 */
+  function updateDayQuick(tab) {
+    var q = document.getElementById("day-quick");
+    if (q) q.style.display = (tab === "notes" || tab === "metro") ? "" : "none";
+  }
   /* ---------- 分頁切換 ---------- */
   var tabBtns = document.querySelectorAll("#tabs button");
   tabBtns.forEach(function (btn) {
@@ -362,6 +367,7 @@
       btn.classList.add("active");
       document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("active"); });
       document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
+      updateDayQuick(btn.dataset.tab);
     });
   });
 
@@ -691,13 +697,13 @@
     }
   }
 
-  /* ---------- 行程：實際行程待 LIN 提供，以下為空架構 ---------- */
+  /* ---------- 行程：以自行新增為主，以下為空架構 ---------- */
   var days = [
-    { id: "D1", label: "D1", date: "11/14（六）", routes: [], todo: "實際行程待 LIN 提供", groups: [] },
-    { id: "D2", label: "D2", date: "11/15（日）", routes: [], todo: "實際行程待 LIN 提供", groups: [] },
-    { id: "D3", label: "D3", date: "11/16（一）", routes: [], todo: "實際行程待 LIN 提供", groups: [] },
-    { id: "D4", label: "D4", date: "11/17（二）", routes: [], todo: "實際行程待 LIN 提供", groups: [] },
-    { id: "D5", label: "D5", date: "11/18（三）", routes: [], todo: "實際行程待 LIN 提供", groups: [] }
+    { id: "D1", label: "D1", date: "11/14（六）", routes: [], groups: [] },
+    { id: "D2", label: "D2", date: "11/15（日）", routes: [], groups: [] },
+    { id: "D3", label: "D3", date: "11/16（一）", routes: [], groups: [] },
+    { id: "D4", label: "D4", date: "11/17（二）", routes: [], groups: [] },
+    { id: "D5", label: "D5", date: "11/18（三）", routes: [], groups: [] }
   ];
 
   var dayBtnWrap = document.getElementById("day-buttons");
@@ -853,9 +859,11 @@
   function goDay(id) {
     tabBtns.forEach(function (b) { b.classList.toggle("active", b.dataset.tab === "plan"); });
     document.querySelectorAll(".panel").forEach(function (p) { p.classList.toggle("active", p.id === "panel-plan"); });
+    updateDayQuick("plan");
     showDay(id);
   }
   showDay("D1");
+  updateDayQuick("plan");
 
   /* ---------- 購物：自行新增 ---------- */
   function renderShoppingCustom() {
