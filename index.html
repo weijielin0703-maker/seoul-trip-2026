@@ -295,28 +295,43 @@
     </div>
   </section>
 
-  <!-- 行程 -->
+  <!-- 行程：只有自己新增的網美推薦 -->
   <section class="panel active" id="panel-plan">
-    <div style="margin-bottom:12px;">
-      <button type="button" class="btn-ghost" id="plan-export">📋 複製我新增的項目</button>
-      <span class="export-status" id="plan-export-status"></span>
+    <div class="card">
+      <div class="sec-title sec-lav">💜 網美推薦</div>
+      <p class="muted">自己新增的網美推薦／小紅書景點都在這裡；Day1～Day5 是獨立的行程表，用上面那排 Day 按鈕進去看。</p>
+      <div id="recs-list"></div>
+      <div class="add-form">
+        <input type="text" id="rec-name" placeholder="推薦內容，例如：明洞逛街" aria-label="推薦內容">
+        <input type="url" id="rec-url" placeholder="連結（選填，可貼小紅書／IG 連結）" aria-label="連結（選填）">
+        <button type="button" class="btn" id="rec-add">加入</button>
+      </div>
+      <div style="margin-top:12px;">
+        <button type="button" class="btn-ghost" id="rec-export">📋 複製我新增的項目</button>
+        <span class="export-status" id="rec-export-status"></span>
+      </div>
     </div>
-    <div class="days" id="day-buttons"></div>
+  </section>
+
+  <!-- Day1～Day5：獨立的行程表，點 Day 按鈕進來 -->
+  <section id="day-view" style="display:none;">
+    <div style="margin-bottom:12px;">
+      <button type="button" class="btn-ghost" id="day-back">← 回到分頁</button>
+      <button type="button" class="btn-ghost" id="day-export">📋 複製這幾天的行程</button>
+      <span class="export-status" id="day-export-status"></span>
+    </div>
     <div id="day-panels"></div>
   </section>
 
   <!-- 購物 -->
   <section class="panel" id="panel-shopping">
     <div class="card">
-      <div class="sec-title sec-peach">🛍️ 購物</div>
-      <div class="todo">購物清單待 LIN 提供</div>
-    </div>
-    <div class="card">
       <div class="sec-title sec-lav">＋ 新增購物點</div>
       <div id="shopping-custom-list"></div>
       <div class="add-form">
         <input type="text" id="shop-name" placeholder="店名／購物點名稱" aria-label="店名／購物點名稱">
         <input type="text" id="shop-note" placeholder="備註（選填）" aria-label="備註（選填）">
+        <input type="url" id="shop-url" placeholder="連結（選填，可貼小紅書／IG 連結）" aria-label="連結（選填）">
         <button type="button" class="btn" id="shop-add">加入</button>
       </div>
       <div style="margin-top:12px;">
@@ -353,22 +368,17 @@
     cd.innerHTML = "旅行結束，歡迎回家 💕<small>2026/11/14–11/19</small>";
   }
 
-  /* Day1~Day5 快捷列只在須知／地鐵顯示；點進行程／購物後就收起來，
-     行程分頁內原本的 D1–D5 選擇器負責換天，避免兩排同時出現 */
-  function updateDayQuick(tab) {
-    var q = document.getElementById("day-quick");
-    if (q) q.style.display = (tab === "notes" || tab === "metro") ? "" : "none";
-  }
-  /* ---------- 分頁切換 ---------- */
+  /* ---------- 分頁切換（Day 檢視獨立於分頁之外） ---------- */
   var tabBtns = document.querySelectorAll("#tabs button");
+  var currentTab = "plan";
+  function showTab(tab) {
+    tabBtns.forEach(function (b) { b.classList.toggle("active", b.dataset.tab === tab); });
+    document.querySelectorAll(".panel").forEach(function (p) { p.classList.toggle("active", p.id === "panel-" + tab); });
+    document.getElementById("day-view").style.display = "none";
+    currentTab = tab;
+  }
   tabBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      tabBtns.forEach(function (b) { b.classList.remove("active"); });
-      btn.classList.add("active");
-      document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("active"); });
-      document.getElementById("panel-" + btn.dataset.tab).classList.add("active");
-      updateDayQuick(btn.dataset.tab);
-    });
+    btn.addEventListener("click", function () { showTab(btn.dataset.tab); });
   });
 
   /* ---------- localStorage 勾選 ---------- */
@@ -663,14 +673,14 @@
     var lines = [];
     days.forEach(function (day) {
       loadCustom("seoul2026:custom:" + day.id).forEach(function (it) {
-        lines.push(day.label + " " + day.date + (it.time ? " " + it.time : "") + " " + it.text);
+        lines.push(day.label + " " + day.date + (it.time ? " " + it.time : "") + " " + it.text + (it.url ? " " + it.url : ""));
       });
     });
     return lines.join("\n");
   }
   function shoppingExportText() {
     return loadCustom("seoul2026:custom:shopping").map(function (it) {
-      return it.name + (it.note ? " — " + it.note : "");
+      return it.name + (it.note ? " — " + it.note : "") + (it.url ? " " + it.url : "");
     }).join("\n");
   }
   /* --- CUSTOM PURE END --- */
@@ -706,7 +716,6 @@
     { id: "D5", label: "D5", date: "11/18（三）", routes: [], groups: [] }
   ];
 
-  var dayBtnWrap = document.getElementById("day-buttons");
   var dayPanelWrap = document.getElementById("day-panels");
   var dayQuickWrap = document.getElementById("day-quick");
   var dayCustomLists = {};
@@ -720,6 +729,15 @@
       var txt = document.createElement("span");
       txt.className = "txt";
       txt.textContent = (it.time ? it.time + " " : "") + it.text;
+      var link = null;
+      if (it.url) {
+        link = document.createElement("a");
+        link.className = "mapbtn";
+        link.href = it.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "🔗 連結";
+      }
       var del = document.createElement("button");
       del.type = "button"; del.className = "del-btn"; del.textContent = "✕";
       del.setAttribute("aria-label", "刪除");
@@ -730,19 +748,13 @@
         renderDayCustom(dayId);
       });
       row.appendChild(txt);
+      if (link) row.appendChild(link);
       row.appendChild(del);
       listDiv.appendChild(row);
     });
   }
 
   days.forEach(function (day, di) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.innerHTML = day.label + "<small>" + day.date + "</small>";
-    b.addEventListener("click", function () { showDay(day.id); });
-    b.dataset.day = day.id;
-    dayBtnWrap.appendChild(b);
-
     var qb = document.createElement("button");
     qb.type = "button";
     qb.innerHTML = "Day" + (di + 1) + "<small>" + day.date + "</small>";
@@ -822,6 +834,10 @@
     textInput.type = "text";
     textInput.placeholder = "行程內容，例如：明洞逛街";
     textInput.setAttribute("aria-label", "行程內容");
+    var urlInput = document.createElement("input");
+    urlInput.type = "url";
+    urlInput.placeholder = "連結（選填，可貼小紅書／IG 連結）";
+    urlInput.setAttribute("aria-label", "連結（選填）");
     var addBtn = document.createElement("button");
     addBtn.type = "button";
     addBtn.className = "btn";
@@ -829,14 +845,17 @@
     addBtn.addEventListener("click", function () {
       var text = textInput.value.trim();
       if (!text) { textInput.focus(); return; }
+      var url = urlInput.value.trim();
+      if (url && !/^https?:\/\//i.test(url)) url = "https://" + url;
       var arr = loadCustom("seoul2026:custom:" + day.id);
-      arr.push({ time: timeInput.value, text: text });
+      arr.push({ time: timeInput.value, text: text, url: url });
       saveCustom("seoul2026:custom:" + day.id, arr);
-      timeInput.value = ""; textInput.value = "";
+      timeInput.value = ""; textInput.value = ""; urlInput.value = "";
       renderDayCustom(day.id);
     });
     form.appendChild(timeInput);
     form.appendChild(textInput);
+    form.appendChild(urlInput);
     form.appendChild(addBtn);
     card.appendChild(form);
     renderDayCustom(day.id);
@@ -846,9 +865,6 @@
   });
 
   function showDay(id) {
-    document.querySelectorAll("#day-buttons button").forEach(function (b) {
-      b.classList.toggle("active", b.dataset.day === id);
-    });
     document.querySelectorAll("#day-quick button").forEach(function (b) {
       b.classList.toggle("active", b.dataset.day === id);
     });
@@ -857,13 +873,60 @@
     });
   }
   function goDay(id) {
-    tabBtns.forEach(function (b) { b.classList.toggle("active", b.dataset.tab === "plan"); });
-    document.querySelectorAll(".panel").forEach(function (p) { p.classList.toggle("active", p.id === "panel-plan"); });
-    updateDayQuick("plan");
+    tabBtns.forEach(function (b) { b.classList.remove("active"); });
+    document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("active"); });
+    document.getElementById("day-view").style.display = "block";
     showDay(id);
   }
   showDay("D1");
-  updateDayQuick("plan");
+
+  /* ---------- 行程：網美推薦（獨立於 Day1～Day5） ---------- */
+  function renderRecs() {
+    var listDiv = document.getElementById("recs-list");
+    listDiv.innerHTML = "";
+    loadCustom("seoul2026:custom:recs").forEach(function (it, idx) {
+      var row = document.createElement("div");
+      row.className = "custom-item";
+      var txt = document.createElement("span");
+      txt.className = "txt";
+      txt.textContent = it.text;
+      row.appendChild(txt);
+      if (it.url) {
+        var link = document.createElement("a");
+        link.className = "mapbtn";
+        link.href = it.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "🔗 連結";
+        row.appendChild(link);
+      }
+      var del = document.createElement("button");
+      del.type = "button"; del.className = "del-btn"; del.textContent = "✕";
+      del.setAttribute("aria-label", "刪除");
+      del.addEventListener("click", function () {
+        var arr = loadCustom("seoul2026:custom:recs");
+        arr.splice(idx, 1);
+        saveCustom("seoul2026:custom:recs", arr);
+        renderRecs();
+      });
+      row.appendChild(del);
+      listDiv.appendChild(row);
+    });
+  }
+  document.getElementById("rec-add").addEventListener("click", function () {
+    var nameEl = document.getElementById("rec-name");
+    var urlEl = document.getElementById("rec-url");
+    var text = nameEl.value.trim();
+    if (!text) { nameEl.focus(); return; }
+    var url = urlEl.value.trim();
+    if (url && !/^https?:\/\//i.test(url)) url = "https://" + url;
+    var arr = loadCustom("seoul2026:custom:recs");
+    arr.push({ text: text, url: url });
+    saveCustom("seoul2026:custom:recs", arr);
+    nameEl.value = ""; urlEl.value = "";
+    renderRecs();
+  });
+  renderRecs();
 
   /* ---------- 購物：自行新增 ---------- */
   function renderShoppingCustom() {
@@ -875,6 +938,15 @@
       var txt = document.createElement("span");
       txt.className = "txt";
       txt.textContent = it.name + (it.note ? " — " + it.note : "");
+      var link = null;
+      if (it.url) {
+        link = document.createElement("a");
+        link.className = "mapbtn";
+        link.href = it.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "🔗 連結";
+      }
       var del = document.createElement("button");
       del.type = "button"; del.className = "del-btn"; del.textContent = "✕";
       del.setAttribute("aria-label", "刪除");
@@ -885,6 +957,7 @@
         renderShoppingCustom();
       });
       row.appendChild(txt);
+      if (link) row.appendChild(link);
       row.appendChild(del);
       listDiv.appendChild(row);
     });
@@ -892,19 +965,33 @@
   document.getElementById("shop-add").addEventListener("click", function () {
     var nameEl = document.getElementById("shop-name");
     var noteEl = document.getElementById("shop-note");
+    var urlEl = document.getElementById("shop-url");
     var name = nameEl.value.trim();
     if (!name) { nameEl.focus(); return; }
+    var url = urlEl.value.trim();
+    if (url && !/^https?:\/\//i.test(url)) url = "https://" + url;
     var arr = loadCustom("seoul2026:custom:shopping");
-    arr.push({ name: name, note: noteEl.value.trim() });
+    arr.push({ name: name, note: noteEl.value.trim(), url: url });
     saveCustom("seoul2026:custom:shopping", arr);
-    nameEl.value = ""; noteEl.value = "";
+    nameEl.value = ""; noteEl.value = ""; urlEl.value = "";
     renderShoppingCustom();
   });
   renderShoppingCustom();
 
   /* ---------- 匯出複製 ---------- */
-  document.getElementById("plan-export").addEventListener("click", function () {
-    copyCustomText(planExportText(), document.getElementById("plan-export-status"));
+  function recsExportText() {
+    return loadCustom("seoul2026:custom:recs").map(function (it) {
+      return it.text + (it.url ? " " + it.url : "");
+    }).join("\n");
+  }
+  document.getElementById("rec-export").addEventListener("click", function () {
+    copyCustomText(recsExportText(), document.getElementById("rec-export-status"));
+  });
+  document.getElementById("day-export").addEventListener("click", function () {
+    copyCustomText(planExportText(), document.getElementById("day-export-status"));
+  });
+  document.getElementById("day-back").addEventListener("click", function () {
+    showTab(currentTab);
   });
   document.getElementById("shop-export").addEventListener("click", function () {
     copyCustomText(shoppingExportText(), document.getElementById("shop-export-status"));
