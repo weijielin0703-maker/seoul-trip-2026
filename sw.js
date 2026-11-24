@@ -1,5 +1,5 @@
 /* 離線殼：版本變更時清掉舊快取，新安裝立刻接手。 */
-var CACHE = "okinawa-shell-v4";
+var CACHE = "okinawa-shell-v5";
 var ASSETS = [
   "./",
   "./index.html",
