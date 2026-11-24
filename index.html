@@ -219,6 +219,7 @@
   }
   .sched-item {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: 10px;
     padding: 11px 4px;
@@ -312,6 +313,39 @@
     border: 1px solid rgba(255, 220, 100, 0.6);
     background: rgba(40, 20, 8, 0.45);
     box-shadow: 0 0 8px rgba(255, 80, 180, 0.35), 0 0 10px rgba(80, 240, 255, 0.2);
+  }
+  .navs {
+    flex: 1 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .card .navs { margin-top: 12px; }
+  .nav-btn, .nav-apple {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    text-decoration: none;
+    font-family: inherit;
+    font-weight: 800;
+  }
+  .nav-btn {
+    padding: 0 14px;
+    font-size: 15px;
+    color: #2a0c16;
+    background: linear-gradient(90deg, #ffb15a, #ff5d8f);
+    box-shadow: 0 4px 14px rgba(255, 80, 120, 0.28);
+  }
+  .nav-apple {
+    min-width: 44px;
+    padding: 0 12px;
+    font-size: 13px;
+    color: #fff6ee;
+    background: rgba(8, 16, 28, 0.55);
+    border: 1px solid rgba(180, 220, 255, 0.45);
   }
 
   .day-note {
@@ -537,6 +571,7 @@
         <li><b>取車：</b>11/25 10:00，那霸空港店，車型 Raize</li>
         <li><b>還車：</b>11/27 18:00，還車前 17:00 先加滿油</li>
       </ul>
+      <div id="notes-rental"></div>
     </div>
     <div class="card">
       <div class="sec-title sec-teal">🏠 住宿 Airbnb</div>
@@ -545,6 +580,7 @@
         <li><b>入住：</b>11/25 15:00；14:00 後會收到大門密碼</li>
         <li><b>退房：</b>11/27 10:00 前</li>
       </ul>
+      <div id="notes-stay"></div>
     </div>
     <div class="card">
       <div class="sec-title sec-sun">✈️ 航班</div>
@@ -553,6 +589,7 @@
         <li><b>回程：</b>虎航 IT233，11/27 21:30 那霸 → 22:05 桃園 T1</li>
         <li>去程 03:40 從新店出發，04:35 前到桃園 T1</li>
       </ul>
+      <div id="notes-airports"></div>
     </div>
   </section>
 
@@ -673,6 +710,63 @@
     return link;
   }
 
+  /* 開車導航。Google 為主（iPhone 會開 Google 地圖，可進 CarPlay），旁邊附 Apple 地圖。 */
+  var PLACE = {
+    tpe: "台湾桃園国際空港 第一ターミナル",
+    relax: "リラックスレンタカー 那覇空港店 沖縄県那覇市若狭1-15-5",
+    aeonNaha: "イオン那覇店 沖縄県那覇市金城5-10-2",
+    itoman: "糸満漁業協同組合 お魚センター 沖縄県糸満市西崎町4-19",
+    umikaji: "瀬長島ウミカジテラス 沖縄県豊見城市瀬長174-6",
+    airbnb: "沖縄県那覇市牧志1-8-2",
+    huu: "HUU'S COFFEE 沖縄県那覇市牧志2-5-23",
+    bic: "ビックカメラ Select 那覇国際通り店 沖縄県那覇市久茂地3-29-2",
+    ushi: "琉球の牛 那覇国際通り店 沖縄県那覇市牧志3-2-3",
+    chura: "ちゅらさん6 沖縄県那覇市松山1-5-1",
+    parco: "サンエー浦添西海岸 PARCO CITY 沖縄県浦添市西洲3-1-1",
+    av: "美浜アメリカンビレッジ 沖縄県中頭郡北谷町美浜9-1",
+    aeonChatan: "イオン北谷店 沖縄県中頭郡北谷町字美浜8-3",
+    calif: "THE CALIF KITCHEN OKINAWA 沖縄県中頭郡北谷町美浜9-21",
+    sunset: "北谷公園サンセットビーチ 沖縄県中頭郡北谷町字美浜2",
+    king: "焼肉きんぐ 北谷店 沖縄県中頭郡北谷町字伊平2-3-5",
+    maxvalu: "マックスバリュ牧志店 沖縄県那覇市牧志2-10-1",
+    kokusai: "国際通り 沖縄県那覇市牧志",
+    motobu: "焼肉もとぶ牧場 国際通り店 沖縄県那覇市松尾1-1-2",
+    gas: "カーエネクス若狭給油所 沖縄県那覇市若狭2-19-1",
+    nahaAirport: "那覇空港 沖縄県那覇市鏡水150"
+  };
+  function makeNavs(places) {
+    if (typeof places === "string") places = [{ q: places }];
+    var wrap = document.createElement("div");
+    wrap.className = "navs";
+    places.forEach(function (p) {
+      var q = encodeURIComponent(p.q);
+      var g = document.createElement("a");
+      g.className = "nav-btn";
+      g.href = "https://www.google.com/maps/dir/?api=1&destination=" + q + "&travelmode=driving";
+      g.target = "_blank";
+      g.rel = "noopener";
+      g.textContent = "🧭 " + (p.label || "導航");
+      g.addEventListener("click", function (e) { e.stopPropagation(); });
+      var a = document.createElement("a");
+      a.className = "nav-apple";
+      a.href = "https://maps.apple.com/?daddr=" + q + "&dirflg=d";
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.textContent = "Apple";
+      a.setAttribute("aria-label", (p.label ? p.label + "，" : "") + "Apple 地圖導航");
+      a.addEventListener("click", function (e) { e.stopPropagation(); });
+      wrap.appendChild(g);
+      wrap.appendChild(a);
+    });
+    return wrap;
+  }
+  document.getElementById("notes-rental").replaceWith(makeNavs(PLACE.relax));
+  document.getElementById("notes-stay").replaceWith(makeNavs(PLACE.airbnb));
+  document.getElementById("notes-airports").replaceWith(makeNavs([
+    { q: PLACE.nahaAirport, label: "那覇空港" },
+    { q: PLACE.tpe, label: "桃園T1" }
+  ]));
+
   /* 只加標籤，不改行程文字。夜霓虹用在美國村晚上與深夜停留，不暗示酒後開車。 */
   function decorateItem(item) {
     var tags = [];
@@ -701,36 +795,39 @@
   var days = [
     { id: "D1", label: "Day1", date: "11/25（三）", note: "", schedule: [
       { time: "03:40", text: "從新店出發" },
-      { time: "04:35 前", text: "到桃園 T1" },
+      { time: "04:35 前", text: "到桃園 T1", nav: PLACE.tpe },
       { time: "06:35", text: "虎航 IT230 起飛" },
       { time: "08:55", text: "抵達那霸" },
-      { time: "10:00", text: "Relax 那霸空港店取車（Raize）" },
-      { time: "中午前後", text: "AEON 小祿" },
-      { time: "中午前後", text: "糸滿魚市場" },
-      { time: "中午前後", text: "瀨長島" },
-      { time: "15:00", text: "入住 Airbnb（牧志1-8-2）" },
-      { time: "16:00", text: "HUU'S COFFEE" },
-      { time: "16:00 後", text: "逛國際通和 Bic Camera" },
-      { time: "18:30", text: "琉球の牛 國際通店" },
-      { time: "22:00", text: "Churasun 6" }
+      { time: "10:00", text: "Relax 那霸空港店取車（Raize）", nav: PLACE.relax },
+      { time: "中午前後", text: "AEON 小祿", nav: PLACE.aeonNaha },
+      { time: "中午前後", text: "糸滿魚市場", nav: PLACE.itoman },
+      { time: "中午前後", text: "瀨長島", nav: PLACE.umikaji },
+      { time: "15:00", text: "入住 Airbnb（牧志1-8-2）", nav: PLACE.airbnb },
+      { time: "16:00", text: "HUU'S COFFEE", nav: PLACE.huu },
+      { time: "16:00 後", text: "逛國際通和 Bic Camera", nav: PLACE.bic },
+      { time: "18:30", text: "琉球の牛 國際通店", nav: PLACE.ushi },
+      { time: "22:00", text: "Churasun 6", nav: PLACE.chura }
     ]},
-    { id: "D2", label: "Day2", date: "11/26（四）", note: "MaxValu 牧志店 24 小時營業。", schedule: [
+    { id: "D2", label: "Day2", date: "11/26（四）", note: "MaxValu 牧志店 24 小時營業。", noteNav: PLACE.maxvalu, schedule: [
       { time: "09:30", text: "出發" },
-      { time: "10:00", text: "PARCO City" },
-      { time: "12:30", text: "美國村午餐" },
-      { time: "13:30", text: "AEON 北谷" },
-      { time: "14:30", text: "The Calif Kitchen" },
-      { time: "17:30", text: "Sunset Beach 看夕陽" },
-      { time: "18:15", text: "燒肉王北谷店（到店要先報到）" },
-      { time: "20:15", text: "再逛美國村，然後開車回那霸" }
+      { time: "10:00", text: "PARCO City", nav: PLACE.parco },
+      { time: "12:30", text: "美國村午餐", nav: PLACE.av },
+      { time: "13:30", text: "AEON 北谷", nav: PLACE.aeonChatan },
+      { time: "14:30", text: "The Calif Kitchen", nav: PLACE.calif },
+      { time: "17:30", text: "Sunset Beach 看夕陽", nav: PLACE.sunset },
+      { time: "18:15", text: "燒肉王北谷店（到店要先報到）", nav: PLACE.king },
+      { time: "20:15", text: "再逛美國村，然後開車回那霸", navs: [
+        { q: PLACE.av, label: "美國村" },
+        { q: PLACE.airbnb, label: "回住宿" }
+      ]}
     ]},
     { id: "D3", label: "Day3", date: "11/27（五）", note: "", schedule: [
       { time: "10:00 前", text: "退房" },
-      { time: "10:00 前", text: "車停在國際通附近，買伴手禮" },
-      { time: "11:30", text: "焼肉もとぶ牧場 國際通店（Hotel Roco Inn Naha 2F，沒有停車場；遲到 10 分鐘以上可能被取消）" },
+      { time: "10:00 前", text: "車停在國際通附近，買伴手禮", nav: PLACE.kokusai },
+      { time: "11:30", text: "焼肉もとぶ牧場 國際通店（Hotel Roco Inn Naha 2F，沒有停車場；遲到 10 分鐘以上可能被取消）", nav: PLACE.motobu },
       { time: "下午", text: "自由活動" },
-      { time: "17:00", text: "加滿油" },
-      { time: "18:00", text: "還車" },
+      { time: "17:00", text: "加滿油", nav: PLACE.gas },
+      { time: "18:00", text: "還車", nav: PLACE.relax },
       { time: "21:30", text: "虎航 IT233 起飛" },
       { time: "22:05", text: "抵達桃園" }
     ]}
@@ -821,6 +918,8 @@
         row.appendChild(chip);
       });
       if (cb.checked) row.classList.add("done");
+      var places = item.navs || (item.nav ? [{ q: item.nav }] : null);
+      if (places) row.appendChild(makeNavs(places));
       list.appendChild(row);
     });
     panel.appendChild(list);
@@ -830,6 +929,7 @@
       nt.className = "muted day-note";
       nt.textContent = day.note;
       panel.appendChild(nt);
+      if (day.noteNav) panel.appendChild(makeNavs(day.noteNav));
     }
 
     var cl = document.createElement("div");
