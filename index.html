@@ -3,141 +3,544 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#100816">
 <title>沖繩 3天2夜｜2026/11/25–11/27</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='s' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%232a1244'/%3E%3Cstop offset='.7' stop-color='%23ff7a59'/%3E%3Cstop offset='1' stop-color='%23ffd09a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23s)'/%3E%3Ccircle cx='16' cy='18' r='5' fill='%23fff1cc'/%3E%3Cpath d='M0 23c4-3 8-3 12 0s8 3 12 0 8-3 8 0v9H0z' fill='%230e2a48'/%3E%3C/svg%3E">
 <style>
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", sans-serif;
-    background: #0b1a24;
-    color: #e6f2f5;
+    font-family: "PingFang TC", "Hiragino Sans", "WenQuanYi Micro Hei", "Microsoft JhengHei", sans-serif;
+    color: #fff6ee;
     line-height: 1.6;
+    background:
+      radial-gradient(880px 380px at 50% -120px, rgba(255, 112, 72, 0.28), transparent 62%),
+      radial-gradient(520px 320px at 110% 18%, rgba(255, 60, 150, 0.1), transparent 56%),
+      radial-gradient(480px 280px at -12% 88%, rgba(40, 210, 220, 0.08), transparent 52%),
+      #08131c;
+    -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 16px 16px 48px; }
-  h1 { font-size: 26px; margin: 8px 0 4px; }
-  .sub { color: #9fb8c4; font-size: 15px; margin: 0 0 12px; }
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: calc(16px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom));
+  }
+  h1 {
+    font-size: 28px;
+    line-height: 1.25;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-shadow: 0 2px 18px rgba(255, 120, 70, 0.4);
+  }
+  .sub { color: #ffe4d2; font-size: 13.5px; margin: 6px 0 0; line-height: 1.45; }
+  .kicker {
+    margin: 0 0 6px;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    color: #ffc9a4;
+  }
+
+  .hero {
+    margin: -16px -16px 14px;
+    border-radius: 0 0 30px 30px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #100816 0%, #2a1244 100%);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 18px 16px 0;
+    background-image:
+      radial-gradient(1.2px 1.2px at 16% 28%, rgba(255,255,255,.9) 50%, transparent 51%),
+      radial-gradient(1px 1px at 84% 18%, rgba(255,255,255,.75) 50%, transparent 51%),
+      radial-gradient(1.3px 1.3px at 72% 62%, rgba(255, 214, 255, .85) 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 72%, rgba(255,255,255,.55) 50%, transparent 51%),
+      radial-gradient(1.1px 1.1px at 50% 14%, rgba(255,255,255,.7) 50%, transparent 51%);
+  }
+  .hero-svg { display: block; width: 100%; height: 168px; }
+
+  .sea-drift { animation: drift 7.5s ease-in-out infinite; }
+  .sea-drift-slow { animation: drift 12s ease-in-out infinite reverse; }
+  .sun-glow { animation: sunPulse 5s ease-in-out infinite; transform-origin: 168px 102px; }
+  .av-sign { animation: neonPulse 3.6s ease-in-out infinite; }
+  @keyframes drift {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-14px); }
+  }
+  @keyframes sunPulse {
+    0%, 100% { opacity: 0.86; }
+    50% { opacity: 1; }
+  }
+  @keyframes neonPulse {
+    0%, 100% { opacity: 0.92; }
+    46% { opacity: 1; }
+    50% { opacity: 0.78; }
+    54% { opacity: 1; }
+  }
+
   .countdown {
-    background: #123243; border: 1px solid #1e4a5e; border-radius: 12px;
-    padding: 10px 14px; font-size: 17px; font-weight: 700; color: #7fe3f0; margin-bottom: 12px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: #ffe6b0;
+    text-shadow: 0 0 8px rgba(255, 196, 90, 0.9), 0 0 18px rgba(255, 80, 130, 0.4);
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    background:
+      linear-gradient(180deg, rgba(42, 16, 28, 0.94), rgba(12, 16, 30, 0.94)) padding-box,
+      linear-gradient(90deg, #ff9a4a, #ff4d8d, #3de0ff) border-box;
+    border: 1px solid transparent;
+    box-shadow: 0 0 22px rgba(255, 80, 120, 0.16);
   }
+  .countdown::before { content: "🌅 "; }
+
   .flights { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .flight {
-    background: #12293a; border: 1px solid #1e4a5e; border-radius: 12px; padding: 12px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.05), transparent 30%),
+      linear-gradient(165deg, rgba(36, 18, 30, 0.94), rgba(10, 26, 40, 0.94));
+    border: 1px solid rgba(255, 170, 140, 0.22);
+    border-radius: 16px;
+    padding: 12px 12px 11px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
   }
-  .flight b { display: block; font-size: 15px; color: #ffb74d; }
-  .flight .time { font-size: 20px; font-weight: 700; }
-  .flight .place { font-size: 14px; color: #9fb8c4; }
-  #tabs { display: flex; gap: 8px; margin: 12px 0; }
+  .flight-go { box-shadow: inset 0 3px 0 #ff8a4a, inset 0 1px 0 rgba(255,255,255,0.06); }
+  .flight-back { box-shadow: inset 0 3px 0 #3ee0ff, inset 0 1px 0 rgba(255,255,255,0.06); }
+  .flight b { display: block; font-size: 13.5px; line-height: 1.35; color: #ffb15a; margin-bottom: 6px; }
+  .flight-back b { color: #8aefff; }
+  .flight .time { display: block; font-size: 18px; font-weight: 800; line-height: 1.25; letter-spacing: 0.01em; }
+  .flight .place { display: block; font-size: 13px; color: #e4cfc4; line-height: 1.35; }
+  .flight .arrow { color: #ff9a6a; font-size: 12px; line-height: 1.2; padding: 1px 0; }
+  .flight-back .arrow { color: #7ee7ff; }
+
+  .dock {
+    position: sticky;
+    top: env(safe-area-inset-top);
+    z-index: 30;
+    margin: 0 -16px 12px;
+    padding: 8px 16px 10px;
+    background: rgba(8, 14, 22, 0.96);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 130, 100, 0.14);
+  }
+  #tabs {
+    display: flex;
+    gap: 4px;
+    margin: 0 0 8px;
+    padding: 4px;
+    border-radius: 16px;
+    background: rgba(6, 12, 20, 0.55);
+    border: 1px solid rgba(255, 160, 130, 0.16);
+  }
   #tabs button {
-    flex: 1; padding: 10px 0; border-radius: 12px; border: 1px solid #1e4a5e;
-    background: #12293a; color: #e6f2f5; font-size: 16px; cursor: pointer;
+    flex: 1;
+    min-height: 42px;
+    padding: 8px 0;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    color: #ffe8dc;
+    font-size: 16px;
+    font-family: inherit;
+    cursor: pointer;
   }
-  #tabs button.active { background: #0e7490; border-color: #22d3ee; color: #fff; font-weight: 700; }
-  #day-quick { display: flex; gap: 8px; margin: 0 0 12px; }
+  #tabs button.active {
+    background: linear-gradient(90deg, #ff9a4a, #ff537f);
+    color: #2a0c16;
+    font-weight: 800;
+    box-shadow: 0 6px 16px rgba(255, 80, 100, 0.32);
+  }
+  #day-quick { display: flex; gap: 8px; margin: 0; }
   #day-quick button {
-    flex: 1; padding: 8px 0; border-radius: 10px; border: 1px solid #1e4a5e;
-    background: #10222f; color: #e6f2f5; font-size: 15px; cursor: pointer;
+    flex: 1;
+    min-height: 48px;
+    padding: 6px 0 5px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 170, 140, 0.24);
+    background: rgba(12, 22, 34, 0.72);
+    color: #fff6ee;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
   }
-  #day-quick button small { display: block; font-size: 12px; color: #9fb8c4; }
-  #day-quick button.active { background: #155e75; border-color: #22d3ee; font-weight: 700; }
+  #day-quick button small { display: block; font-size: 11px; color: #f0d2c4; font-weight: 500; }
+  .day-motif { display: block; font-size: 13px; line-height: 1.1; }
+  #day-quick button.active {
+    font-weight: 800;
+    border-color: transparent;
+    background:
+      linear-gradient(#2a1430, #2a1430) padding-box,
+      linear-gradient(120deg, #ff9a4a, #ff4d8d 55%, #3de0ff) border-box;
+    box-shadow: 0 0 16px rgba(255, 70, 140, 0.28);
+  }
+  #day-quick button.active small { color: #ffe0ea; }
+
   .panel { display: none; }
   .panel.active { display: block; }
   .card {
-    background: #12293a; border: 1px solid #1e4a5e; border-radius: 14px;
-    padding: 14px; margin-bottom: 12px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.035), transparent 26%),
+      linear-gradient(180deg, rgba(24, 16, 28, 0.92), rgba(10, 26, 38, 0.92));
+    border: 1px solid rgba(255, 160, 130, 0.2);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 12px 28px rgba(0,0,0,0.22);
   }
-  .sec-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-  .sec-teal { color: #7fe3f0; }
-  .sec-sun { color: #ffb74d; }
-  .muted { color: #9fb8c4; font-size: 14px; }
-  .card ul { margin: 0; padding-left: 20px; }
+  .sec-title { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .sec-teal { color: #8ef6ee; }
+  .sec-sun { color: #ffb067; }
+  .muted { color: #f0ddd4; font-size: 14px; }
+  .card ul { margin: 0; padding-left: 1.15em; }
   .card li { margin-bottom: 8px; }
+  .card li::marker { color: #ff8f6b; }
+  .card b { color: #fffaf6; }
+
+  .day-head { display: flex; align-items: center; gap: 8px; margin: 2px 0 10px; }
+  .day-head .sec-title { margin: 0; }
+  .day-head-icon { font-size: 22px; line-height: 1; }
+  .day-head.D1 .sec-title { color: #ffd7a8; }
+  .day-head.D2 .sec-title { color: #ffb15a; text-shadow: 0 0 12px rgba(255, 140, 70, 0.35); }
+  .day-head.D3 .sec-title { color: #e4d4ff; }
+
+  .schedule {
+    background: linear-gradient(180deg, rgba(22, 16, 28, 0.92), rgba(10, 24, 36, 0.92));
+    border: 1px solid rgba(255, 160, 130, 0.18);
+    border-radius: 18px;
+    padding: 4px 8px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 28px rgba(0,0,0,0.22);
+  }
   .sched-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 9px 4px; border-bottom: 1px solid #1a3a4d;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 11px 4px;
+    min-height: 44px;
+    border-bottom: 1px solid rgba(255, 180, 160, 0.12);
   }
   .sched-item:last-child { border-bottom: none; }
-  .sched-item input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: #22d3ee; }
-  .sched-item .time { flex-shrink: 0; width: 74px; font-weight: 700; color: #ffb74d; font-size: 15px; }
-  .sched-item .txt { flex: 1; }
-  .sched-item.done .txt { text-decoration: line-through; color: #7a97a3; }
-  .sched-item.done .time { color: #7a97a3; }
-  .custom-item {
-    display: flex; align-items: center; gap: 8px;
-    padding: 8px 4px; border-bottom: 1px solid #1a3a4d;
+  .sched-item input[type="checkbox"] {
+    width: 22px;
+    height: 22px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    accent-color: #ff4d8d;
   }
-  .custom-item .txt { flex: 1; }
+  .sched-item .time {
+    flex-shrink: 0;
+    width: 5.1em;
+    font-weight: 800;
+    color: #ffc27a;
+    font-size: 15px;
+  }
+  .sched-item .txt { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .sched-item.done { background: transparent; box-shadow: none; }
+  .sched-item.done .txt { text-decoration: line-through; color: #b6a6be; }
+  .sched-item.done .time { color: #b6a6be; text-shadow: none; }
+  .sched-item.done .tag { opacity: 0.45; box-shadow: none; }
+
+  .sched-item.mood-beach,
+  .sched-item.mood-sunset,
+  .sched-item.mood-village,
+  .sched-item.mood-neon {
+    border-bottom-color: transparent;
+    margin: 4px 0;
+    border-radius: 12px;
+    padding: 10px 8px;
+  }
+  .sched-item.mood-beach {
+    background: linear-gradient(90deg, rgba(40, 210, 210, 0.16), transparent 78%);
+    box-shadow: inset 3px 0 0 #3ee0d0;
+  }
+  .sched-item.mood-beach .time { color: #7ef6ee; }
+  .sched-item.mood-sunset {
+    background: linear-gradient(90deg, rgba(255, 140, 60, 0.2), rgba(255, 80, 120, 0.06) 70%, transparent);
+    box-shadow: inset 3px 0 0 #ff8a4a, 0 0 16px rgba(255, 120, 60, 0.12);
+  }
+  .sched-item.mood-sunset .time {
+    color: #ffb15a;
+    text-shadow: 0 0 8px rgba(255, 150, 70, 0.75);
+  }
+  .sched-item.mood-village {
+    background: linear-gradient(90deg, rgba(255, 80, 170, 0.12), transparent 80%);
+    box-shadow: inset 3px 0 0 #ff6eb4;
+  }
+  .sched-item.mood-village .time { color: #ff9ad4; }
+  .sched-item.mood-neon {
+    background: linear-gradient(90deg, rgba(255, 50, 170, 0.2), rgba(50, 240, 255, 0.08) 72%, transparent);
+    box-shadow: inset 0 0 0 1px rgba(255, 80, 190, 0.4), 0 0 16px rgba(255, 50, 160, 0.16);
+  }
+  .sched-item.mood-neon .time {
+    color: #ff8ad8;
+    text-shadow: 0 0 8px rgba(255, 70, 190, 0.9), 0 0 14px rgba(60, 240, 255, 0.35);
+  }
+  .tag {
+    flex-shrink: 0;
+    margin-top: 2px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+  }
+  .tag-beach {
+    color: #bafcff;
+    border: 1px solid rgba(80, 240, 230, 0.55);
+    background: rgba(0, 40, 48, 0.45);
+  }
+  .tag-sunset {
+    color: #ffe0b8;
+    border: 1px solid rgba(255, 170, 80, 0.6);
+    background: rgba(60, 24, 8, 0.4);
+    box-shadow: 0 0 8px rgba(255, 140, 60, 0.28);
+  }
+  .tag-village {
+    color: #ffd0f0;
+    border: 1px solid rgba(255, 80, 190, 0.6);
+    background: rgba(40, 8, 28, 0.45);
+    box-shadow: 0 0 8px rgba(255, 60, 170, 0.28);
+  }
+  .tag-night {
+    color: #fff1b0;
+    border: 1px solid rgba(255, 220, 100, 0.6);
+    background: rgba(40, 20, 8, 0.45);
+    box-shadow: 0 0 8px rgba(255, 80, 180, 0.35), 0 0 10px rgba(80, 240, 255, 0.2);
+  }
+
+  .day-note {
+    margin: 10px 0;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(255, 186, 90, 0.08);
+    border: 1px solid rgba(255, 196, 120, 0.28);
+    color: #ffe3c2;
+  }
+  .custom-list:not(:empty) {
+    background: rgba(12, 22, 34, 0.72);
+    border: 1px solid rgba(255, 160, 140, 0.16);
+    border-radius: 14px;
+    padding: 2px 8px;
+    margin: 8px 0 10px;
+  }
+  .custom-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    min-height: 44px;
+    border-bottom: 1px solid rgba(255, 180, 160, 0.12);
+  }
+  .custom-item:last-child { border-bottom: none; }
+  .custom-item .txt { flex: 1; min-width: 0; overflow-wrap: anywhere; }
   .mapbtn {
-    flex-shrink: 0; font-size: 13px; color: #7fe3f0; text-decoration: none;
-    border: 1px solid #1e4a5e; border-radius: 8px; padding: 3px 8px;
+    flex-shrink: 0;
+    font-size: 13px;
+    color: #9af6ff;
+    text-decoration: none;
+    border: 1px solid rgba(80, 230, 240, 0.4);
+    border-radius: 8px;
+    padding: 6px 8px;
+    box-shadow: 0 0 8px rgba(60, 220, 240, 0.12);
   }
   .del-btn {
-    flex-shrink: 0; border: none; background: none; color: #7a97a3;
-    font-size: 16px; cursor: pointer; padding: 2px 6px;
+    flex-shrink: 0;
+    border: none;
+    background: none;
+    color: #d7c4cc;
+    font-size: 16px;
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 2px 6px;
+    font-family: inherit;
   }
   .add-form { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .add-form input {
-    flex: 1 1 120px; padding: 9px 10px; border-radius: 10px;
-    border: 1px solid #1e4a5e; background: #0b1a24; color: #e6f2f5; font-size: 15px;
+    flex: 1 1 140px;
+    min-height: 44px;
+    padding: 9px 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 160, 140, 0.28);
+    background: rgba(6, 12, 20, 0.72);
+    color: #fff8f2;
+    font-size: 16px;
+    font-family: inherit;
+    color-scheme: dark;
   }
-  .add-form input[type="time"] { flex: 0 0 96px; }
+  .add-form input[type="time"] { flex: 0 0 112px; }
+  .add-form input::placeholder { color: #cbb6c0; }
+  .add-form input:focus {
+    outline: none;
+    border-color: #ff6eb4;
+    box-shadow: 0 0 0 3px rgba(255, 80, 160, 0.22);
+  }
   .btn {
-    padding: 9px 16px; border-radius: 10px; border: none;
-    background: #0e7490; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer;
+    flex: 1 0 100%;
+    min-height: 44px;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #ff8f45, #ff4f86);
+    color: #2a0c16;
+    font-size: 16px;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(255, 80, 110, 0.28);
   }
+  .btn:active { transform: translateY(1px); }
   .btn-ghost {
-    padding: 9px 14px; border-radius: 10px; border: 1px solid #1e4a5e;
-    background: #12293a; color: #e6f2f5; font-size: 15px; cursor: pointer;
+    min-height: 44px;
+    padding: 9px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 170, 130, 0.35);
+    background: rgba(16, 24, 36, 0.8);
+    color: #ffe1c8;
+    font-size: 15px;
+    font-family: inherit;
+    cursor: pointer;
   }
-  footer { margin-top: 20px; font-size: 13px; color: #7a97a3; text-align: center; }
+  #day-back { margin-bottom: 0; }
+  button:focus-visible, a:focus-visible, input:focus-visible {
+    outline: 2px solid #ffd18a;
+    outline-offset: 2px;
+  }
   .day-panel { display: none; }
   .day-panel.active { display: block; }
+  footer { margin-top: 18px; font-size: 13px; color: #e4cfc6; text-align: center; }
+  .footer-wave { display: block; width: 100%; height: 22px; margin-bottom: 8px; }
+
+  @media (max-width: 340px) {
+    .flights { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sea-drift, .sea-drift-slow, .sun-glow, .av-sign { animation: none; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>🌺 沖繩 3天2夜</h1>
-  <p class="sub">2026/11/25（三）– 11/27（五）｜那霸・美國村・北谷</p>
-  <div class="countdown" id="countdown">出發倒數計算中…</div>
+  <header class="hero">
+    <div class="hero-copy">
+      <p class="kicker">日落 · 海灘 · 夜霓虹</p>
+      <h1>🌺 沖繩 3天2夜</h1>
+      <p class="sub">2026/11/25（三）– 11/27（五）｜那霸・美國村・北谷</p>
+    </div>
+    <svg class="hero-svg" viewBox="0 0 390 168" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2a1244"/>
+          <stop offset="28%" stop-color="#6d245c"/>
+          <stop offset="52%" stop-color="#e85d6a"/>
+          <stop offset="70%" stop-color="#ff9960"/>
+          <stop offset="86%" stop-color="#ffd09a"/>
+          <stop offset="100%" stop-color="#ffd7b0"/>
+        </linearGradient>
+        <radialGradient id="sun" cx="50%" cy="45%" r="55%">
+          <stop offset="0%" stop-color="#fff7df"/>
+          <stop offset="42%" stop-color="#ffd36a"/>
+          <stop offset="100%" stop-color="#ff7a3c"/>
+        </radialGradient>
+        <filter id="neon" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="1.8" result="b"/>
+          <feMerge>
+            <feMergeNode in="b"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <g id="palm" fill="#14060f" stroke="#14060f" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M62 150 C64 124 56 100 66 74" fill="none" stroke-width="6"/>
+          <path d="M66 78 C40 70 16 78 6 90 C26 84 48 82 66 78Z"/>
+          <path d="M66 76 C44 62 28 40 38 26 C48 46 60 64 66 76Z"/>
+          <path d="M68 76 C82 52 104 40 116 50 C100 60 82 68 68 76Z"/>
+          <path d="M68 78 C94 70 122 78 136 92 C112 84 86 82 68 78Z"/>
+          <path d="M64 80 C48 96 34 118 42 128 C52 112 60 94 64 80Z"/>
+          <path d="M70 80 C86 98 102 116 94 128 C84 112 76 96 70 80Z"/>
+        </g>
+      </defs>
+      <rect width="390" height="168" fill="url(#sky)"/>
+      <g fill="#fff">
+        <circle cx="28" cy="18" r="1.1" opacity="0.9"/>
+        <circle cx="54" cy="32" r="0.8" opacity="0.7"/>
+        <circle cx="96" cy="16" r="1" opacity="0.85"/>
+        <circle cx="140" cy="26" r="0.7" opacity="0.65"/>
+        <circle cx="214" cy="14" r="1" opacity="0.8"/>
+        <circle cx="368" cy="16" r="0.9" opacity="0.75"/>
+      </g>
+      <circle cx="330" cy="20" r="7" fill="#fff6e4"/>
+      <circle cx="330" cy="20" r="12" fill="#fff6e4" opacity="0.16"/>
+      <ellipse class="sun-glow" cx="168" cy="108" rx="130" ry="26" fill="#ffb060" opacity="0.35"/>
+      <circle cx="168" cy="102" r="30" fill="url(#sun)"/>
+      <g class="sea-drift-slow">
+        <path d="M-40 118 Q 30 102 100 118 T 230 116 T 360 120 T 480 116 V 190 H-40 Z" fill="#1b4c80"/>
+      </g>
+      <ellipse cx="168" cy="124" rx="3.2" ry="12" fill="#ffe0a8" opacity="0.5"/>
+      <ellipse cx="168" cy="140" rx="1.8" ry="5" fill="#ffe0a8" opacity="0.28"/>
+      <g class="sea-drift">
+        <path d="M-40 134 Q 40 122 120 136 T 270 132 T 420 138 T 500 132 V 190 H-40 Z" fill="#12355c"/>
+      </g>
+      <path d="M-40 150 Q 60 140 140 152 T 300 148 T 460 154 V 190 H-40 Z" fill="#0a1b2e"/>
+      <use href="#palm" transform="translate(-28, 16) scale(0.62)" opacity="0.55"/>
+      <use href="#palm" transform="translate(-8, 6)"/>
+      <g class="av-sign">
+        <line x1="306" y1="88" x2="298" y2="132" stroke="#1a0c14" stroke-width="3.5" stroke-linecap="round"/>
+        <rect x="246" y="44" width="118" height="42" rx="8" fill="#140710" stroke="#ff4ec9" stroke-width="2" filter="url(#neon)"/>
+        <circle cx="256" cy="52" r="2.1" fill="#5ef6ff"/>
+        <circle cx="354" cy="52" r="2.1" fill="#ffb067"/>
+        <text x="305" y="70" text-anchor="middle" font-size="18" font-weight="700" fill="#ffd4f2" font-family="WenQuanYi Micro Hei, PingFang TC, Microsoft JhengHei, sans-serif">美國村</text>
+        <path d="M268 78 H342" stroke="#5ef6ff" stroke-width="1.5" stroke-linecap="round" filter="url(#neon)"/>
+      </g>
+    </svg>
+  </header>
+
+  <div class="countdown" id="countdown" aria-live="polite">出發倒數計算中…</div>
   <div class="flights">
-    <div class="flight">
+    <div class="flight flight-go">
       <b>✈️ 去程・虎航 IT230</b>
       <span class="place">桃園 T1</span>
       <span class="time">11/25 06:35</span>
-      <span class="place">↓</span>
+      <span class="place arrow">↓</span>
       <span class="time">08:55</span>
       <span class="place">那霸</span>
     </div>
-    <div class="flight">
+    <div class="flight flight-back">
       <b>✈️ 回程・虎航 IT233</b>
       <span class="place">那霸</span>
       <span class="time">11/27 21:30</span>
-      <span class="place">↓</span>
+      <span class="place arrow">↓</span>
       <span class="time">22:05</span>
       <span class="place">桃園 T1</span>
     </div>
   </div>
 
-  <nav id="tabs">
-    <button type="button" data-tab="notes">須知</button>
-    <button type="button" data-tab="plan" class="active">行程</button>
-    <button type="button" data-tab="shopping">購物</button>
-  </nav>
-  <div id="day-quick"></div>
+  <div class="dock">
+    <nav id="tabs">
+      <button type="button" data-tab="notes">須知</button>
+      <button type="button" data-tab="plan" class="active">行程</button>
+      <button type="button" data-tab="shopping">購物</button>
+    </nav>
+    <div id="day-quick"></div>
+  </div>
 
   <!-- 須知 -->
   <section class="panel" id="panel-notes">
     <div class="card">
       <div class="sec-title sec-sun">🚗 租車（Relax 那霸空港店）</div>
-      <ul class="muted" style="margin:0;padding-left:20px;">
+      <ul class="muted" style="margin:0;padding-left:1.15em;">
         <li><b>取車：</b>11/25 10:00，那霸空港店，車型 Raize</li>
         <li><b>還車：</b>11/27 18:00，還車前 17:00 先加滿油</li>
       </ul>
     </div>
     <div class="card">
       <div class="sec-title sec-teal">🏠 住宿 Airbnb</div>
-      <ul class="muted" style="margin:0;padding-left:20px;">
+      <ul class="muted" style="margin:0;padding-left:1.15em;">
         <li><b>地址：</b>牧志1-8-2（國際通附近）</li>
         <li><b>入住：</b>11/25 15:00；14:00 後會收到大門密碼</li>
         <li><b>退房：</b>11/27 10:00 前</li>
@@ -145,7 +548,7 @@
     </div>
     <div class="card">
       <div class="sec-title sec-sun">✈️ 航班</div>
-      <ul class="muted" style="margin:0;padding-left:20px;">
+      <ul class="muted" style="margin:0;padding-left:1.15em;">
         <li><b>去程：</b>虎航 IT230，11/25 06:35 桃園 T1 → 08:55 那霸</li>
         <li><b>回程：</b>虎航 IT233，11/27 21:30 那霸 → 22:05 桃園 T1</li>
         <li>去程 03:40 從新店出發，04:35 前到桃園 T1</li>
@@ -190,6 +593,10 @@
   </section>
 
   <footer>
+    <svg class="footer-wave" viewBox="0 0 390 22" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 12 Q 24 2 48 12 T 96 12 T 144 12 T 192 12 T 240 12 T 288 12 T 336 12 T 384 12 T 432 12 V 22 H 0 Z" fill="rgba(255,140,90,0.18)"/>
+      <path d="M0 16 Q 24 8 48 16 T 96 16 T 144 16 T 192 16 T 240 16 T 288 16 T 336 16 T 384 16 T 432 16 V 22 H 0 Z" fill="rgba(60,220,230,0.16)"/>
+    </svg>
     航班、住宿、租車以訂位資料為準；行程與購物可自行新增。<br>
     新增項目只存在自己手機的瀏覽器裡，不會同步到另一支手機。
   </footer>
@@ -266,6 +673,30 @@
     return link;
   }
 
+  /* 只加標籤，不改行程文字。夜霓虹用在美國村晚上與深夜停留，不暗示酒後開車。 */
+  function decorateItem(item) {
+    var tags = [];
+    var mood = "";
+    var text = item.text;
+    if (text.indexOf("瀨長島") !== -1) {
+      mood = "mood-beach";
+      tags.push(["tag-beach", "海邊"]);
+    }
+    if (text.indexOf("Sunset Beach") !== -1 || text.indexOf("夕陽") !== -1) {
+      mood = "mood-sunset";
+      tags.push(["tag-sunset", "夕陽"]);
+    }
+    if (text.indexOf("美國村") !== -1) {
+      mood = item.time.indexOf("20:") === 0 ? "mood-neon" : "mood-village";
+      tags.push(["tag-village", "美國村"]);
+    }
+    if (text.indexOf("Churasun") !== -1) {
+      mood = "mood-neon";
+      tags.push(["tag-night", "夜"]);
+    }
+    return { mood: mood, tags: tags };
+  }
+
   /* ---------- 三天行程（固定行程＋自行新增） ---------- */
   var days = [
     { id: "D1", label: "Day1", date: "11/25（三）", note: "", schedule: [
@@ -308,6 +739,7 @@
   var dayPanelWrap = document.getElementById("day-panels");
   var dayQuickWrap = document.getElementById("day-quick");
   var dayCustomLists = {};
+  var dayMotif = { D1: "✈️", D2: "🌅", D3: "🌙" };
 
   function renderDayCustom(dayId) {
     var listDiv = dayCustomLists[dayId];
@@ -334,7 +766,7 @@
   days.forEach(function (day) {
     var qb = document.createElement("button");
     qb.type = "button";
-    qb.innerHTML = day.label + "<small>" + day.date + "</small>";
+    qb.innerHTML = "<span class=\"day-motif\" aria-hidden=\"true\">" + dayMotif[day.id] + "</span>" + day.label + "<small>" + day.date + "</small>";
     qb.addEventListener("click", function () { goDay(day.id); });
     qb.dataset.day = day.id;
     dayQuickWrap.appendChild(qb);
@@ -342,16 +774,26 @@
     var panel = document.createElement("div");
     panel.className = "day-panel";
     panel.id = "day-" + day.id;
+
+    var head = document.createElement("div");
+    head.className = "day-head " + day.id;
+    var icon = document.createElement("span");
+    icon.className = "day-head-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = dayMotif[day.id];
     var h = document.createElement("div");
-    h.className = "sec-title sec-teal";
+    h.className = "sec-title";
     h.textContent = day.label + " " + day.date;
-    panel.appendChild(h);
+    head.appendChild(icon);
+    head.appendChild(h);
+    panel.appendChild(head);
 
     var list = document.createElement("div");
     list.className = "schedule";
     day.schedule.forEach(function (item, idx) {
+      var deco = decorateItem(item);
       var row = document.createElement("div");
-      row.className = "sched-item";
+      row.className = "sched-item" + (deco.mood ? " " + deco.mood : "");
       var cb = document.createElement("input");
       cb.type = "checkbox";
       cb.checked = !!loadChecked(day.id)[idx];
@@ -371,6 +813,13 @@
       row.appendChild(cb);
       row.appendChild(tm);
       row.appendChild(tx);
+      deco.tags.forEach(function (tag) {
+        var chip = document.createElement("span");
+        chip.className = "tag " + tag[0];
+        chip.textContent = tag[1];
+        chip.setAttribute("aria-hidden", "true");
+        row.appendChild(chip);
+      });
       if (cb.checked) row.classList.add("done");
       list.appendChild(row);
     });
@@ -378,12 +827,13 @@
 
     if (day.note) {
       var nt = document.createElement("p");
-      nt.className = "muted";
+      nt.className = "muted day-note";
       nt.textContent = day.note;
       panel.appendChild(nt);
     }
 
     var cl = document.createElement("div");
+    cl.className = "custom-list";
     panel.appendChild(cl);
     dayCustomLists[day.id] = cl;
 
