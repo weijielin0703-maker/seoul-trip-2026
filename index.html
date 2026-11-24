@@ -1653,11 +1653,6 @@
     };
   }
   var TRIP_DAY = { "2026-11-25": "D1", "2026-11-26": "D2", "2026-11-27": "D3" };
-  function dayDiff(from, to) {
-    var a = Date.parse(from + "T00:00:00+09:00");
-    var b = Date.parse(to + "T00:00:00+09:00");
-    return Math.round((b - a) / 86400000);
-  }
   function refreshToday(doScroll) {
     var now = tokyoNow(new Date());
     var badge = document.getElementById("trip-badge");
@@ -1665,11 +1660,11 @@
     document.querySelectorAll(".next-flag").forEach(function (el) { el.remove(); });
     var dayId = TRIP_DAY[now.date];
     if (!dayId) {
-      var n = dayDiff(now.date, "2026-11-25");
-      badge.hidden = false;
-      badge.textContent = n > 0 ? ("出發還有 " + n + " 天") : "這趟行程結束了";
+      badge.hidden = true;
+      badge.textContent = "";
       if (doScroll) {
-        var y0 = window.scrollY + badge.getBoundingClientRect().top - 16;
+        var cd = document.getElementById("countdown");
+        var y0 = window.scrollY + cd.getBoundingClientRect().top - 16;
         window.scrollTo(0, Math.max(0, y0));
       }
       return;
